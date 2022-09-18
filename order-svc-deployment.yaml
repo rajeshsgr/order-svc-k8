@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-svc
+  template:
+    metadata:
+      labels:
+        app: order-svc
+    spec:
+      containers:
+       - image: raje/order-svc:1.0
+         name: order-svc
+         ports:
+           - containerPort: 8080
+         env:
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: changeme
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgresql:5432/northwind?useSSL=false
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
